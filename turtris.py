@@ -3,7 +3,6 @@ import random
 import turtle
 import leaderboard
 import time
-import multiprocessing
 
 
 # -----game configuration----
