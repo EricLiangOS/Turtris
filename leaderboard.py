@@ -14,12 +14,14 @@ def update_leaderboard(file_name, leaderboard_values, player_name, player_score,
     #Split line into list containing name and score
     line = line.split(",")
 
-    # Add name and score to lists4
+    # Add name and score to lists
     leaderboard_values.append([line[0],line[1], int(line[2])])
 
 
+  #Close leaderboard file
   leaderboard_file.close()
 
+  #Add player information to the leaderboard
   leaderboard_values.append([mode,player_name,player_score])
 
   #Sort leaderboard into correct values
@@ -28,7 +30,7 @@ def update_leaderboard(file_name, leaderboard_values, player_name, player_score,
 
   leaderboard_file = open(file_name, "w")  # this mode opens the file and erases its contents for a fresh start
   
-  # Loop through the leaderboard values and write into file
+  # Loop through the leaderboard values and write into file in proper format(Will only write the first 5 or all if # of leaderboard values < 5)
   for index in range(min(len(leaderboard_values), 5)):
     line = leaderboard_values[index]
     
@@ -66,12 +68,16 @@ def draw_leaderboard(made_leaderboard, file_name, turtle_object, player_score):
   turtle_object.hideturtle()
   turtle_object.down()
   
+  #Writes out all the leaderboard file names
   leaderboard_file = open(file_name, "r")
 
+  #Loops through the leaderboard file to write the values
   for index, line in enumerate(leaderboard_file):
 
     line = line.split(",")
   # loop through the lists and use the same index to display the corresponding name and score, separated by spaces
+
+    #Colors assigned to each position
     if index == 0:
       turtle_object.color("aqua")
     elif index == 1:
@@ -82,6 +88,8 @@ def draw_leaderboard(made_leaderboard, file_name, turtle_object, player_score):
       turtle_object.color("silver")
     else:
       turtle_object.color("saddlebrown")
+    
+    #Writes name in correct format and moves down to next space
     turtle_object.write(str(index + 1) + leaderboard_space + line[0] + leaderboard_space + line[1] + leaderboard_space + line[2], font=font_setup)
     turtle_object.penup()
     turtle_object.goto(-225,int(turtle_object.ycor())-50)
@@ -92,6 +100,7 @@ def draw_leaderboard(made_leaderboard, file_name, turtle_object, player_score):
   turtle_object.penup()
   turtle_object.setx(0)
   turtle_object.pendown()
+
   if (made_leaderboard):
     turtle_object.color("ghostwhite")
     turtle_object.write("You Made The Leaderboard", align = "center", font=font_setup)
@@ -104,7 +113,7 @@ def draw_leaderboard(made_leaderboard, file_name, turtle_object, player_score):
   turtle_object.goto(0,int(turtle_object.ycor())-50)
   turtle_object.pendown()
   
-  # TODO 10: Display a gold/silver/bronze message if player earned a gold/silver/or bronze medal; display nothing if no medal
+  #Display a gold/silver/bronze message if player earned a gold/silver/or bronze medal; display nothing if no medal
   
   if (player_score >= bronze_score and player_score < silver_score):
     turtle_object.color("saddlebrown")
