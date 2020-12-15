@@ -199,6 +199,7 @@ def button_pressed(x_coor, y_coor):
 
     button_index = -1
 
+    #Assigns intdexes to the buttons so certain pressed buttons will have certain triggers
     if x_coor < 74 and x_coor > -74:
         if y_coor < 211 and y_coor > 60:
             button_index = 0
@@ -207,6 +208,7 @@ def button_pressed(x_coor, y_coor):
         elif y_coor < -170 and y_coor > -320:
             button_index = 2
 
+    #Senses a button has been pressed and will begin the game (Assigns difficulty stats here)
     if button_index > -1:
         wn.clear()
         wn.bgcolor("dimgrey")
@@ -237,7 +239,7 @@ def button_pressed(x_coor, y_coor):
         wn.tracer(False)
         actual_game()
 
-
+#Creates new block by picking new shape and resetting position
 def new_block():
     global block_y, block_x, block, next_block, shapes
 
@@ -247,7 +249,7 @@ def new_block():
     block_x = 5
     block_y = 0
 
-
+#Blocks have overflowed
 def game_over():
     global leaderboard_file_name, score, active_button
     wn.clear()
@@ -268,14 +270,14 @@ def game_over():
     # See if home button has been pressed
     wn.onclick(lambda x, y: button_pressed(x, y))
 
-
+#Redraws score
 def update_score(score):
     pen.goto(-127.5, 255)
     pen.color("white")
     pen.write("Score: " + str(int(score)), move=False,
               align="left", font=standard_font)
 
-
+#Checks if any rows are filled or if game is over
 def update_grid():
     global grid, score, active_multiplyer, continue_game
 
@@ -307,8 +309,6 @@ def update_grid():
     continue_game = True
 
 # Function that redraws grid after every block
-
-
 def draw_grid():
     global grid
     pen.clear()
@@ -329,8 +329,6 @@ def draw_grid():
             pen.stamp()
 
 # Function that redraws the container
-
-
 def draw_storage():
     global storage
     storage_pen.clear()
@@ -350,9 +348,7 @@ def draw_storage():
             storage_pen.setpos(j_pos, i_pos)
             storage_pen.stamp()
 
-# Function that redraws the next block
-
-
+# Function that redraws the next block container
 def draw_next_block():
     global preview, next_block
     preview_pen.clear()
@@ -413,8 +409,6 @@ def swap_blocks():
     have_swapped = True
 
 # All the functions regarding movement
-
-
 def clear_previous():
     global grid, block_x, block_y, block
 
@@ -425,8 +419,6 @@ def clear_previous():
                 grid[i + block_y][j + block_x] = 0
 
 # Essentially wipe clean the storage grid
-
-
 def clear_previous_storage():
     global storage, stored_block
 
@@ -436,7 +428,7 @@ def clear_previous_storage():
             row.append(0)
             storage[i] = row
 
-
+#Moves x-position left
 def left():
     global grid, block_x, block, grid_height, block_y
 
@@ -447,7 +439,7 @@ def left():
             block_x -= 1
             time.sleep(0.0003)
 
-
+#Moves x-position right
 def right():
     global grid, block_x, block, grid_height
 
@@ -458,7 +450,7 @@ def right():
             block_x += 1
             time.sleep(0.0003)
 
-
+#Checks for any collisions with blocks below
 def can_move_down():
     global grid, block_x, block
 
@@ -474,7 +466,7 @@ def can_move_down():
                     break
     return movable
 
-
+#Decreases y-coordinate by 1 if can move down
 def speed_down():
     global block_y, score, active_multiplyer, block, grid_height
 
@@ -485,7 +477,7 @@ def speed_down():
         draw_block()
         score += 0.25*active_multiplyer
 
-
+#Continually moves down until collision is detected or hits the ground
 def drop():
     global block_y, score, active_multiplyer, block, grid_height
 
@@ -496,7 +488,7 @@ def drop():
         draw_block()
         score += 1.5 * active_multiplyer
 
-
+#Rotates block 90 degrees
 def rotate():
     global block, block_x
 
@@ -515,7 +507,7 @@ def rotate():
         block = rotated_block
     time.sleep(0.0007)
 
-
+#Draws the block onto its new position in the grid based on x and y coordinates
 def draw_block():
     global grid, block_x, block_y, block
 
@@ -525,8 +517,6 @@ def draw_block():
                 grid[block_y + i][block_x + j] = block[i][j]
 
 # Similar to update_grid and draw_block, replaces the old storage w/ new one
-
-
 def update_storage():
     global storage, stored_block
 
@@ -534,7 +524,7 @@ def update_storage():
         for j in range(len(stored_block[0])):
             storage[i+1][j+2] = stored_block[i][j]
 
-
+#Loop that keeps running until game over and loads the leaderboard
 def actual_game():
     global block_x, block_y, score, speed, continue_game, have_swapped, small_font, go_home, grid_height
 
@@ -605,10 +595,9 @@ def actual_game():
 wn.listen()
 
 # -----events----------------
+#Triggers the home screen which can lead to the games
 home_screen()
 
 
 wn.update()
-
-
 wn.mainloop()
