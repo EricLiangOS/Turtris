@@ -478,10 +478,10 @@ def left():
 
 #Moves x-position right
 def right():
-    global grid, block_x, block, grid_height
+    global grid, block_x, block, grid_height, grid_width
  
     # Check if block can fit in the right side and above 2nd row (Must do or blocks sometimes disappear)
-    if block_x < grid_height - len(block[0]) and can_move_down() and block_y < grid_height - 2:
+    if block_x < grid_width - len(block[0]) and can_move_down() and block_y < grid_height - 2:
         #Checks for collisions with the right
         if grid[block_y][block_x + len(block[0])] == 0:
             clear_previous()
