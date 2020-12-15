@@ -1,5 +1,1 @@
-Blitz Mode,Smiling-Strawberry,10000000
-Blitz Mode,Amazing-Avocado,1000000
-Blitz Mode,Wonderful-Watermelon,100000
-Blitz Mode,Silly-Seastar,10000
-Blitz Mode,Curious-Cherry,1000
+
