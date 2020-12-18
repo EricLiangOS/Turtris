@@ -471,7 +471,12 @@ def left():
     # Check if block can fit in the left side, can move down, and above 2nd row (Must do or blocks sometimes disappear)
     if block_x > 0 and can_move_down() and block_y < grid_height - 2:
         #Sees if any collisions with the left
-        if grid[block_y][block_x - 1] == 0:
+        for i in range(len(block)):
+            can_move_left = True
+            if grid[block_y + i][block_x - 1] != 0:
+                can_move_left = False
+            
+        if can_move_left:
             clear_previous()
             block_x -= 1
             time.sleep(0.0003)
@@ -483,7 +488,11 @@ def right():
     # Check if block can fit in the right side and above 2nd row (Must do or blocks sometimes disappear)
     if block_x < grid_width - len(block[0]) and can_move_down() and block_y < grid_height - 2:
         #Checks for collisions with the right
-        if grid[block_y][block_x + len(block[0])] == 0:
+        for i in range(len(block)):
+            can_move_right = True
+            if grid[block_y + i][block_x + len(block[0])] != 0:
+                can_move_right = False
+        if can_move_right:
             clear_previous()
             block_x += 1
             time.sleep(0.0003)
